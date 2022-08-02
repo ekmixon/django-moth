@@ -68,9 +68,9 @@ class _MemcacheInjectionView(VulnerableTemplateView):
         # pylint: enable=E1101
 
         inj = str(injected)
-        if not inj == '':
+        if inj:
             inj = cgi.escape(inj, quote=True)
-        html = "injected key: <b>"+inj+"</b>"
+        html = f"injected key: <b>{inj}</b>"
         context = self.get_context_data(html=html,
                                         success=True)
 

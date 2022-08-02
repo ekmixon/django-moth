@@ -23,7 +23,7 @@ class BlindSQLIntegerFormView(FormTemplateView):
                                             form=GenericForm())
         else:
             user_input = form.cleaned_data[GenericForm.INPUT]
-            query = "SELECT * FROM auth_user WHERE id = %s" % user_input
+            query = f"SELECT * FROM auth_user WHERE id = {user_input}"
 
             db_error, users = get_users(query)
             db_error, users = fake_error_handling(db_error, users)
@@ -52,7 +52,7 @@ class BlindSQLIntegerFormGETView(VulnerableTemplateView):
         # The user filled the form, lets use it!
         # pylint: disable=E1101
         user_input = request.GET['q']
-        query = "SELECT * FROM auth_user WHERE id = %s" % user_input
+        query = f"SELECT * FROM auth_user WHERE id = {user_input}"
 
         db_error, users = get_users(query)
         db_error, users = fake_error_handling(db_error, users)
@@ -74,7 +74,7 @@ class BlindSQLIntegerQSView(VulnerableTemplateView):
 
     def get(self, request, *args, **kwds):
         user_input = request.GET.get('id', '1')
-        query = "SELECT * FROM auth_user WHERE id = %s" % user_input
+        query = f"SELECT * FROM auth_user WHERE id = {user_input}"
 
         db_error, users = get_users(query)
         db_error, users = fake_error_handling(db_error, users)

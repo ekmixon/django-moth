@@ -20,16 +20,16 @@ class EchoHeadersView(VulnerableTemplateView):
         
     def get(self, request, *args, **kwds):
         context = self.get_context_data()
-        
-        html = ''
+
         msg_fmt = 'Header "%s" with value "%s" <br/>\n'
-        
-        for hname in request.META:
-            if self.is_http_header(hname):
-                html += msg_fmt % (self.translate_header(hname),
-                                   request.META[hname])
-            
+
+        html = ''.join(
+            msg_fmt % (self.translate_header(hname), request.META[hname])
+            for hname in request.META
+            if self.is_http_header(hname)
+        )
+
         context['html'] = html
-        
+
         return render(request, self.template_name, context)
 

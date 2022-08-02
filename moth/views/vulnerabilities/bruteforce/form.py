@@ -27,7 +27,7 @@ class PostLoginForm(forms.Form):
         self.helper = FormHelper()
         self.helper.form_class = 'form-inline'
         self.helper.form_method = self.METHOD
-        
+
         submit = Submit('Submit', 'Submit', css_class="btn-success")
 
         self.helper.layout = Layout(
@@ -69,12 +69,12 @@ class PostGuessableCredsLoginFormView(FormTemplateView):
     
     def post(self, request, *args, **kwds):
         context = self.get_context_data()
-        
+
         if (request.POST['uname'], request.POST['password']) in self.users:
             context['message'] = AUTH_SUCCESS
         else:
             context['message'] = AUTH_ERROR
-        
+
         return render(request, self.template_name, context)
 
 
@@ -96,12 +96,12 @@ class PasswordOnlyGuessableCredsLoginFormView(FormTemplateView):
     
     def post(self, request, *args, **kwds):
         context = self.get_context_data()
-        
+
         if request.POST['password'] in self.passwords:
             context['message'] = AUTH_SUCCESS
         else:
             context['message'] = AUTH_ERROR
-        
+
         return render(request, self.template_name, context)
 
 
@@ -116,14 +116,14 @@ class GetGuessableCredsLoginFormView(FormTemplateView):
     def get(self, request, *args, **kwargs):
         if 'uname' in request.GET and 'password' in request.GET:
             context = self.get_context_data()
-            
+
             if (request.GET['uname'], request.GET['password']) in self.users:
                 context['message'] = AUTH_SUCCESS
             else:
                 context['message'] = AUTH_ERROR
-                
+
             return render(request, self.template_name, context)
-        
+
         form = self.form_klass()
         return render(request, self.template_name,
                       self.get_context_data(form=form))

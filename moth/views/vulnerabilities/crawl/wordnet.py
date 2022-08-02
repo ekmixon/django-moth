@@ -71,7 +71,7 @@ class ShowView(HTMLTemplateView):
     
     def get(self, request, *args, **kwds):
         os = request.GET.get('os', 'linux')
-        
+
         if os == 'linux':
             msg = 'We like linux very much, user friendly!'
         elif os == 'unix':
@@ -80,7 +80,7 @@ class ShowView(HTMLTemplateView):
             msg = 'Hating Windows, not easy to develop for that platform'
         else:
             msg = 'Invalid OS choice'
-                
+
         context = self.get_context_data()
         context['html'] = msg
         return render(request, self.template_name, context)

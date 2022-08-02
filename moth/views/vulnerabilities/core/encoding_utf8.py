@@ -12,6 +12,8 @@ HTML = u'''<html>
 </html>'''
 
 
+
+
 class UTF8WithJapaneseCharactersView(HTMLTemplateView):
     title = 'UTF-8 test with Japanese characters'
     description = 'UTF-8 test with Japanese characters in filename (link is' \
@@ -19,8 +21,9 @@ class UTF8WithJapaneseCharactersView(HTMLTemplateView):
     url_path = u'改.py'
     extra_headers = {'Content-Type': 'text/html; charset=utf-8'}
 
-    HTML = HTML % {'charset': 'utf-8',
-                   'body': u'Space filler'}
+    HTML %= {'charset': 'utf-8', 'body': u'Space filler'}
+
+
 
 
 class UTF8WithECuteView(HTMLTemplateView):

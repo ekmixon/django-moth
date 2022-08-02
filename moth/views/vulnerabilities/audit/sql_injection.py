@@ -23,15 +23,15 @@ class SQLIntegerFormView(FormTemplateView):
                                             form=GenericForm())
         else:
             user_input = form.cleaned_data[GenericForm.INPUT]
-            query = "SELECT * FROM auth_user WHERE id = %s" % user_input
-            
+            query = f"SELECT * FROM auth_user WHERE id = {user_input}"
+
             db_error, users = get_users(query)
-            
+
             context = self.get_context_data(db_error=db_error,
                                             users=users,
                                             success=True,
                                             form=GenericForm())
-            
+
         return render(request, self.template_name, context)
 
 
@@ -45,14 +45,14 @@ class SQLIntegerQSView(VulnerableTemplateView):
     
     def get(self, request, *args, **kwds):
         user_input = request.GET.get('id', '1')
-        query = "SELECT * FROM auth_user WHERE id = %s" % user_input
-        
+        query = f"SELECT * FROM auth_user WHERE id = {user_input}"
+
         db_error, users = get_users(query)
-        
+
         context = self.get_context_data(db_error=db_error,
                                         users=users,
                                         success=True)
-        
+
         return render(request, self.template_name, context)
 
 

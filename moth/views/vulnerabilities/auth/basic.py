@@ -22,14 +22,11 @@ def view_or_basicauth(view, request, users, realm = "", *args, **kwargs):
     """
     if 'HTTP_AUTHORIZATION' in request.META:
         auth = request.META['HTTP_AUTHORIZATION'].split()
-        if len(auth) == 2:
-            # NOTE: We are only support basic authentication for now.
-            #
-            if auth[0].lower() == "basic":
-                uname, passwd = base64.b64decode(auth[1]).split(':')
-                print uname, passwd, users
-                if (uname, passwd) in users:
-                    return view(request, *args, **kwargs)
+        if len(auth) == 2 and auth[0].lower() == "basic":
+            uname, passwd = base64.b64decode(auth[1]).split(':')
+            uname, passwd = base64.b64decode(auth[1]).split(':')
+            if (uname, passwd) in users:
+                return view(request, *args, **kwargs)
 
     # Either they did not provide an authorization header or
     # something in the authorization attempt failed. Send a 401

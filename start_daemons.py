@@ -172,12 +172,12 @@ if __name__ == '__main__':
     log_directory = parse_args()
     python = sys.executable
 
-    print('Saving logs to %s' % log_directory)
-    
+    print(f'Saving logs to {log_directory}')
+
     p1, monitor_thread, http_port = start_django_app_http(log_directory, python)
     p2, monitor_thread, https_port = start_django_app_https(log_directory, python)
     write_address_files(http_port, https_port)
-    
+
     try:
         # pylint: disable=E1101
         p1.wait()

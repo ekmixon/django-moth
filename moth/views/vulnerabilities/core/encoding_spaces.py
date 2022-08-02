@@ -17,15 +17,21 @@ HTML = '''
 '''
 
 
+
+
 class FormGetView(HTMLTemplateView):
     title = 'Form with special parameters and GET method'
     description = 'An HTML form with hidden field which has a "+" character'\
                   ' which is submitted using the GET method.'
     url_path = 'form_GET_spaces.html'
-    
-    HTML = HTML % {'method': 'GET',
-                   'eventvalidation': EVENTVALIDATION,
-                   'action': 'xss-get.py'}
+
+    HTML %= {
+        'method': 'GET',
+        'eventvalidation': EVENTVALIDATION,
+        'action': 'xss-get.py',
+    }
+
+
 
 
 class FormPOSTView(HTMLTemplateView):
@@ -33,7 +39,7 @@ class FormPOSTView(HTMLTemplateView):
     description = 'An HTML form with hidden field which has a "+" character'\
                   ' which is submitted using the POST method.'
     url_path = 'form_POST_spaces.html'
-    
+
     HTML = HTML % {'method': 'POST',
                    'eventvalidation': EVENTVALIDATION,
                    'action': 'xss-post.py'}
@@ -41,11 +47,13 @@ class FormPOSTView(HTMLTemplateView):
 
 def _handle(request, data_src, template_name, context):
     context['html'] = 'Invalid EVENTVALIDATION!'
-    
-    if '__EVENTVALIDATION' in data_src:
-        if data_src['__EVENTVALIDATION'] == EVENTVALIDATION:
-            context['html'] = data_src['_ctl0:_ctl0:Content:Main:TextBox1']
-            
+
+    if (
+        '__EVENTVALIDATION' in data_src
+        and data_src['__EVENTVALIDATION'] == EVENTVALIDATION
+    ):
+        context['html'] = data_src['_ctl0:_ctl0:Content:Main:TextBox1']
+
     return render(request, template_name, context)
 
 

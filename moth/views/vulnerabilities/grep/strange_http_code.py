@@ -9,7 +9,7 @@ class StrangeHTTPCodeView(VulnerableTemplateView):
 
     def get(self, request, *args, **kwds):
         context = self.get_context_data()
-        
+
         status = 527
         context['html'] = 'Error! HTTP response code is 527.'
 

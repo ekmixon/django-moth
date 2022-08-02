@@ -42,8 +42,8 @@ class ArgvOSCommandingView(VulnerableTemplateView):
     
     def get(self, request, *args, **kwds):
         context = self.get_context_data()
-        
-        cmd = 'ls %s' % request.GET['param']
+
+        cmd = f"ls {request.GET['param']}"
         context['html'] = commands.getoutput(cmd)
 
         return render(request, self.template_name, context)

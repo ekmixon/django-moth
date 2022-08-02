@@ -92,7 +92,7 @@ class VulnerableTemplateView(TemplateView):
 
         path = urlparse.urlparse(trailing_part).path
 
-        url_path = '%s/%s/%s' % (family, plugin, path)
+        url_path = f'{family}/{plugin}/{path}'
 
         return url_path.decode('utf-8')
 

@@ -71,10 +71,12 @@ class MetaTagRedirectView(VulnerableTemplateView):
     
     def get(self, request, *args, **kwds):
         context = self.get_context_data()
-        
-        msg = "You're being redirected in 3 seconds, please wait..."
-        msg += '<META http-equiv="refresh" content="3;URL=%s">'
-        
+
+        msg = (
+            "You're being redirected in 3 seconds, please wait..."
+            + '<META http-equiv="refresh" content="3;URL=%s">'
+        )
+
         context['html'] = msg % request.GET['url']
         return render(request, self.template_name, context)
 
@@ -85,9 +87,9 @@ class RedirectHeader302View(VulnerableTemplateView):
     def get(self, request, *args, **kwds):
         context = self.get_context_data()
         context['html'] = 'See HTTP response headers.'
-        
+
         response = render_to_response(self.template_name, context)
         response.status_code = 302
-        response['Refresh'] = "0;url=%s" % request.GET['url']
-        
+        response['Refresh'] = f"0;url={request.GET['url']}"
+
         return response

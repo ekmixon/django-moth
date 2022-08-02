@@ -31,23 +31,23 @@ class FamilyIndexTemplateView(TemplateView):
                  URL attribute, by getting the first directory of the path. 
         '''
         result = {}
-        
+
         for view in self._subviews:
             if not view.linked:
                 continue
-            
+
             _, plugin_name = view.get_family_plugin()
-            path = '%s/%s' % (plugin_name, view.get_trailing_url_part())
+            path = f'{plugin_name}/{view.get_trailing_url_part()}'
             tags = view.tags
-            
+
             if plugin_name not in result:
                 result[plugin_name] = [(view.title, path, tags),]
             else:
                 result[plugin_name].append((view.title, path, tags))
-        
+
         for plugin_name in result:
             result[plugin_name] = sorted(result[plugin_name], key=lambda x: x[0])
-        
+
         return result
     
     def get(self, request):

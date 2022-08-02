@@ -14,10 +14,10 @@ class SetCookieView(VulnerableTemplateView):
     def get(self, request, *args, **kwds):
         context = self.get_context_data()
         context['html'] = 'See HTTP response headers.'
-        
+
         response = render_to_response(self.template_name, context)
-        response['Set-Cookie'] = '%s=%s;' % (COOKIE_NAME, COOKIE_VALUE)
-        
+        response['Set-Cookie'] = f'{COOKIE_NAME}={COOKIE_VALUE};'
+
         return response
 
 class GetCookieView(VulnerableTemplateView):
@@ -43,14 +43,15 @@ class EchoCookiesView(VulnerableTemplateView):
     
     def get(self, request, *args, **kwds):
         context = self.get_context_data()
-        
-        html = ''
+
         msg_fmt = 'Cookie "%s" with value "%s" <br/>\n'
-        
-        for cookie_name in request.COOKIES:
-            html += msg_fmt % (cookie_name, request.COOKIES[cookie_name])
-            
+
+        html = ''.join(
+            msg_fmt % (cookie_name, request.COOKIES[cookie_name])
+            for cookie_name in request.COOKIES
+        )
+
         context['html'] = html
-        
+
         return render(request, self.template_name, context)
 

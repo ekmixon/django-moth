@@ -19,7 +19,7 @@ class UploadForm(forms.Form):
         self.helper.form_action = 'upload.py'
         self.helper.form_method = 'post'
         self.helper.form_class = 'form-horizontal'
-        
+
         submit = Submit('Upload', 'Upload', css_class="btn-success")
 
         # generate layout
@@ -38,9 +38,9 @@ class ContactView(FormTemplateView):
     def post(self, request, *args, **kwargs):
         has_files = bool(request.FILES)
         msg = 'The file was was successfully uploaded' if has_files else 'Error!'
-        
+
         context = self.get_context_data()
         context['message'] = msg
-        
+
         return render(request, self.template_name, context)
         

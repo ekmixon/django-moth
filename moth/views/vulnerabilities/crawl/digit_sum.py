@@ -44,22 +44,21 @@ class QsDigitsView(VulnerableTemplateView):
 
         _id = request.GET['id']
 
-        if _id.isdigit() and int(_id) in self.VALID_IDS:
-            parag = int((int(_id) - 20) * 4)
-
-            # A bad thing about the lorem_ipsum module is that it will generate
-            # RANDOM texts each time we call it, that means that in some cases
-            # the plugin will detect big changes, and in some others it won't.
-            #
-            # To be able to fix this issue, we set the random seed
-            #
-            # Keep in mind that with some seeds the test will PASS, and with
-            # many others it won't. Lucky me, it passed on the second try.
-            random.seed(1)
-
-            context['html'] = '<br><br>'.join(lorem_ipsum.paragraphs(parag))
-        else:
+        if not _id.isdigit() or int(_id) not in self.VALID_IDS:
             raise Http404
 
+        parag = int((int(_id) - 20) * 4)
+
+        # A bad thing about the lorem_ipsum module is that it will generate
+        # RANDOM texts each time we call it, that means that in some cases
+        # the plugin will detect big changes, and in some others it won't.
+        #
+        # To be able to fix this issue, we set the random seed
+        #
+        # Keep in mind that with some seeds the test will PASS, and with
+        # many others it won't. Lucky me, it passed on the second try.
+        random.seed(1)
+
+        context['html'] = '<br><br>'.join(lorem_ipsum.paragraphs(parag))
         return render(request, self.template_name, context)
 

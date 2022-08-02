@@ -15,7 +15,7 @@ class RawPathTemplateView(HTMLTemplateView):
         from RawPathTemplateView will get located in a well structured location
         '''
         path = urlparse.urlparse(self.url_path).path
-        return unicode('%s' % path)
+        return unicode(f'{path}')
 
     # FIXME: Add support for encoding
     get_unicode_url_path = get_url_path

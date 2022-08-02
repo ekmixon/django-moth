@@ -35,9 +35,6 @@ class IndexTemplateView(TemplateView):
         links = [(v.title, v.get_trailing_url_part(), v.tags) for v in
                  self._subviews if v.linked]
         links = sorted(links, key=lambda x: x[0])
-        
-        context = {}
-        context['title'] = self._get_title()
-        context['links'] = links
-        
+
+        context = {'title': self._get_title(), 'links': links}
         return render(request, self.template_name, context)
